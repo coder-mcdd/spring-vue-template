@@ -32,7 +32,7 @@ TODO
 这个项目的存在感谢所有贡献者：
 
 <a href="https://github.com/coder-mcdd/spring-vue-template-backend/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=mcdd0506/spring-security-learn-lcly" />
+  <img src="https://contrib.rocks/image?repo=coder-mcdd/spring-vue-template-backend" />
 </a>
 
 ## 许可证 📄
@@ -48,6 +48,6 @@ TODO
 
 <div align="center">
 
-<img src="https://api.star-history.com/svg?repos=mcdd0506/spring-security-learn-lcly&type=Date" width="600" height="400" alt="Star History Chart" valign="middle">
+<img src="https://api.star-history.com/svg?repos=coder-mcdd/spring-vue-template-backend&type=Date" width="600" height="400" alt="Star History Chart" valign="middle">
 
 </div>
