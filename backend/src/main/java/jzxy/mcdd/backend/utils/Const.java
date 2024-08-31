@@ -63,18 +63,13 @@ public final class Const {
     /**
      * 表示普通用户角色的字符串标识符
      */
-    public final static String ROLE_NORMAL = "USER";
+    public final static String ROLE_USER = "USER";
     /**
-     * 限流拦截器 order
+     * 限流拦截器 ORDER
      */
     public final static int ORDER_FLOW_LIMIT = -101;
     /**
-     * cors 跨越拦截器 order
+     * CORS 跨越拦截器 ORDER
      */
     public final static int ORDER_CORS = -102;
-    /**
-     * 默认内部错误消息
-     */
-    public final static String DEFAULT_INNER_ERROR_MSG = "内部错误，请联系管理员 mcdd1024@gmail.com ";
-
 }

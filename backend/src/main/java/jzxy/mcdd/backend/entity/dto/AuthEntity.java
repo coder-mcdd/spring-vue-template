@@ -1,4 +1,4 @@
-package jzxy.mcdd.backend.entity;
+package jzxy.mcdd.backend.entity.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

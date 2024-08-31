@@ -1,7 +1,8 @@
-package jzxy.mcdd.backend.entity;
+package jzxy.mcdd.backend.entity.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import jzxy.mcdd.backend.entity.BaseData;
 import jzxy.mcdd.backend.utils.Const;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,7 +42,7 @@ public class Account implements BaseData, Serializable {
     /**
      * 角色
      */
-    private String role = Const.ROLE_NORMAL;
+    private String role = Const.ROLE_USER;
     /**
      * 头像 link
      */

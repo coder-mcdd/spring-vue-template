@@ -7,6 +7,7 @@ Template project for Spring and Vue(Backend)
 
 ## 概述 🥶
 
+- todo
 
 ## 功能 ✨
 
@@ -32,7 +33,7 @@ TODO
 这个项目的存在感谢所有贡献者：
 
 <a href="https://github.com/coder-mcdd/spring-vue-template-backend/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=coder-mcdd/spring-vue-template-backend" />
+  <img src="https://contrib.rocks/image?repo=coder-mcdd/spring-vue-template-backend"  alt=""/>
 </a>
 
 ## 许可证 📄
@@ -48,6 +49,6 @@ TODO
 
 <div align="center">
 
-<img src="https://api.star-history.com/svg?repos=coder-mcdd/spring-vue-template-backend&type=Date" width="600" height="400" alt="Star History Chart" valign="middle">
+<img src="https://api.star-history.com/svg?repos=coder-mcdd/spring-vue-template-backend&type=Date" width="600" height="400" alt="Star History Chart" align="middle">
 
 </div>

@@ -1,16 +1,21 @@
 package jzxy.mcdd.backend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import jzxy.mcdd.backend.entity.Account;
-import jzxy.mcdd.backend.entity.vo.RegisterVo;
+import jzxy.mcdd.backend.entity.dto.Account;
+import jzxy.mcdd.backend.entity.dto.AuthEntity;
+import jzxy.mcdd.backend.entity.vo.request.RegisterVo;
 import jzxy.mcdd.backend.exception.UserNameAlreadyExistException;
 import jzxy.mcdd.backend.mapper.AccountMapper;
 import jzxy.mcdd.backend.service.AccountService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+
+import java.util.Objects;
 
 /**
  * AccountServiceImpl
@@ -20,11 +25,32 @@ import org.springframework.stereotype.Service;
  * @date: 2024/8/30 22:15
  */
 @Service
+@RequiredArgsConstructor
 public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> implements AccountService {
+    private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+    public UserDetails loadUserByUsername(String text) throws UsernameNotFoundException {
+        Account account = this.findAccountByNameOrEmail(text);
+        if (Objects.isNull(account)) {
+            throw new UsernameNotFoundException(text);
+        }
+        AuthEntity entity = new AuthEntity(account);
+        Assert.notNull(entity, "loadUserByUsername failed --> the AuthEntity is null");
+        return entity;
+    }
+
+    /**
+     * 通过用户名或邮件地址查找用户
+     * @param text 用户名或邮件
+     * @return 账户实体
+     */
+    @Override
+    public Account findAccountByNameOrEmail(String text){
+        return this.query()
+                .eq("username", text).or()
+                .eq("email", text)
+                .one();
     }
     @Override
     public boolean register(RegisterVo vo) {
@@ -33,22 +59,10 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         } else {
             Account account = new Account();
             account.setUsername(vo.getUsername());
-            account.setPassword(vo.getPassword());
+            String password = passwordEncoder.encode(vo.getPassword());
+            account.setPassword(password);
             account.setEmail(vo.getEmail());
             return this.save(account);
-        }
-    }
-
-    @Override
-    public boolean updatePasswordByUsernameOrEmail(String text, String newPassword) {
-        if (!this.userExistsByUsername(text) && !this.userExistsByEmail(text)) {
-            throw new UsernameNotFoundException("没有指定用户名或邮箱的用户");
-        } else {
-            return this.update(new LambdaUpdateWrapper<Account>()
-                    .set(Account::getPassword, newPassword)
-                    .in(Account::getUsername, text)
-                    .or()
-                    .in(Account::getEmail, text));
         }
     }
 

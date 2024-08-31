@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 9090
 springdoc:
   paths-to-match: /**
   paths-to-exclude: /error/**
@@ -37,6 +37,12 @@ spring:
     filter:
       order: -100
   web:
+    verify:
+      mail-limit: 60
+    flow:
+      period: 5
+      limit: 100
+      block: 30
     cors:
       origin: '*'
       credentials: false

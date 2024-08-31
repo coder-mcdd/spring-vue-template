@@ -1,4 +1,4 @@
-package jzxy.mcdd.backend.entity.vo;
+package jzxy.mcdd.backend.entity.vo.request;
 
 import lombok.Data;
 

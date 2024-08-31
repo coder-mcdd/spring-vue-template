@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
     @ExceptionHandler(UsernameNotFoundException.class)
     private RestBean<String> userNameAlreadyExistException(){
         return RestBean.failure(HttpStatus.BAD_REQUEST.value(), "用户名或邮箱已被注册");
