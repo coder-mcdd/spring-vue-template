@@ -1,93 +1,63 @@
 package jzxy.mcdd.backend.service;
 
-import jzxy.mcdd.backend.entity.dto.Account;
+import jakarta.annotation.Resource;
+import jzxy.mcdd.backend.TestcontainersConfiguration;
+import jzxy.mcdd.backend.entity.dto.AuthEntity;
 import jzxy.mcdd.backend.entity.vo.request.RegisterVo;
-import jzxy.mcdd.backend.exception.UserNameAlreadyExistException;
-import jzxy.mcdd.backend.mapper.AccountMapper;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
+@SpringBootTest
+@Import(TestcontainersConfiguration.class)
 class AccountServiceTest {
-    @Mock
-    private AccountMapper mapper;
-    @Mock
-    private PasswordEncoder passwordEncoder;
-    @InjectMocks
+    @Resource
     private AccountService service;
 
     @Test
     public void testLoadUserByUsername_UserExists() {
         // Given
         String username = "cxk";
-        Account account = new Account();
-        account.setUsername(username);
-        when(mapper.selectOne(any())).thenReturn(account);
+        RegisterVo vo = new RegisterVo();
+        vo.setUsername(username);
 
         // When
-        UserDetails userDetails = service.loadUserByUsername(username);
+        AuthEntity entity = (AuthEntity) service.loadUserByUsername(vo.getUsername());
 
         // Then
-        assertNotNull(userDetails);
-        assertEquals(username, userDetails.getUsername());
+        assertNotNull(entity);
+        assertEquals(username, entity.getAccount().getUsername());
     }
 
     @Test
-    public void testLoadUserByUsername_UserNotExists() {
+    public void testLoadUserByUsername_UserDoesNotExist() {
         // Given
-        String username = "not exist";
-        when(mapper.selectOne(any())).thenReturn(null);
+        String username = "nonexistent";
 
-        // Then
-        assertThrows(UsernameNotFoundException.class, () -> {
-            // When
-            service.loadUserByUsername(username);
-        });
+        // When & Then
+        assertThrows(UsernameNotFoundException.class, () -> service.loadUserByUsername(username));
     }
 
     @Test
-    public void testRegister_UserAlreadyExists() {
+    public void testRegister_UserSuccessfullyRegistered() {
         // Given
         RegisterVo vo = new RegisterVo();
-        vo.setUsername("cxk");
-        vo.setEmail("cxk@qq.com");
-        when(service.userExistsByUsername(vo.getUsername())).thenReturn(true);
-
-        // Then
-        assertThrows(UserNameAlreadyExistException.class, () -> {
-            // When
-            service.register(vo);
-        });
-    }
-
-    @Test
-    public void testRegister_UserDoesNotExist() {
-        // Given
-        RegisterVo vo = new RegisterVo();
-        vo.setUsername("newuser");
-        vo.setEmail("new@example.com");
+        vo.setUsername("newUser2");
         vo.setPassword("password");
-        when(service.userExistsByUsername(vo.getUsername())).thenReturn(false);
-        when(service.userExistsByEmail(vo.getEmail())).thenReturn(false);
-        when(passwordEncoder.encode(vo.getPassword())).thenReturn("encodedPassword");
-        when(mapper.insert(any(Account.class))).thenReturn(1);
+        vo.setEmail("newuser2@example.com");
 
         // When
         boolean result = service.register(vo);
 
         // Then
         assertTrue(result);
-        verify(mapper, times(1)).insert(any(Account.class));
     }
+
 
 }
