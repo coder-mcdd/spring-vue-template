@@ -1,0 +1,28 @@
+services:
+  mysql:
+    image: mysql:8.0.39
+    restart: "no"
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - type: bind
+        source: ./db
+        target: /docker-entrypoint-initdb.d
+        read_only: true
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db
+  redis:
+    image: redis:7.4.0
+    restart: "no"
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: redis-cli ping
+      interval: 10s
+      timeout: 5s
+      start_period: 10s
+      retries: 5
+volumes:
+  mysql_data:
