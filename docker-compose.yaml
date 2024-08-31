@@ -24,5 +24,31 @@ services:
       timeout: 5s
       start_period: 10s
       retries: 5
+  rabbitmq:
+    image: rabbitmq:3.13.6
+    restart: "no"
+    ports:
+      - "5432:5432"
+    environment:
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: root
+    healthcheck:
+      test: rabbitmq-diagnostics -q status
+      interval: 10s
+      timeout: 5s
+      start_period: 10s
+      retries: 5
+  mongo:
+    image: mongo:7.0.14
+    restart: "no"
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: db
 volumes:
   mysql_data:
+  mongo_data:
