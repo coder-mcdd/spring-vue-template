@@ -3,7 +3,7 @@ description: Suggest an idea for this project
 title: "[Feature]"
 labels:
   - enhancement
-assignees: mcdd0506
+assignees: coder-mcdd
 body:
   - type: checkboxes
     id: checklist
