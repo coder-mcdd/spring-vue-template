@@ -3,7 +3,7 @@ description: Create a report to help us improve. | 请提交遇到的问题或 B
 title: "[Bug]"
 labels:
   - bug
-assignees: mcdd0506
+assignees: coder-mcdd
 body:
   - type: checkboxes
     id: checklist
@@ -11,7 +11,7 @@ body:
       label: Checklist
       description: Make sure that you follow these statements.
       options:
-        - label: I have searched [issues](https://github.com/coder-mcdd/spring-vue-template-backend/issues?q=)
+        - label: I have searched [issues](https://github.com/coder-mcdd/spring-vue-template/issues?q=)
           required: true
 
   - type: markdown
