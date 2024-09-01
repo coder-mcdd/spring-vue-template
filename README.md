@@ -1,8 +1,8 @@
 <div align="center">
 
-<h1 align="center">Spring Vue Template Backend</h1>
+<h1 align="center">Spring Vue Template</h1>
 
-Template project for Spring and Vue(Backend)
+Template project for Spring and Vue
 </div>
 
 ## 概述 🥶
